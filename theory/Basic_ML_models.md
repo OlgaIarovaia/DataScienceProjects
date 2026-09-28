@@ -640,3 +640,21 @@ gscv = GSCV(model , parametrs, cv=3)#задаем поиск параметро�
 gscv.fit(features_train, target_train) #обучаем модель
 gscv.best_params_ #выводим лучшие параметры
 ```
+
+### Кросс-валидация
+```python
+#Библиотеки
+import pandas as pd
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.model_selection import cross_val_score
+
+#Подготовка к обучению
+data = pd.read_csv('/datasets/heart.csv')
+features = data.drop(['target'], axis=1)
+target = data['target']
+#Обучение и оценка качества кросс-валидацией
+model = DecisionTreeClassifier(random_state=0)
+scores = cross_val_score(model, features, target, cv=5)
+final_score = scores.sum() / len(scores)
+print('Средняя оценка качества модели:', final_score)
+```
